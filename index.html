@@ -125,11 +125,11 @@
   </div>
 
   <script>
-    const config = {
+    var config = {
       apiUrl: "https://script.google.com/macros/s/AKfycbzfuJFKFc5axMP020tU-wSFxtvn9OTQdSQjmqyWigvUILSk01yRKpZ6sYjcdFBMFsSl/exec",
       storeName: "Fully Promoted - Blacktown/Chatswood",
-      storeLat: -33.7680,
-      storeLng: 150.9050,
+      storeLat: -33.7693,
+      storeLng: 150.9528,
       allowedRadiusMeters: 100
     };
 
@@ -213,6 +213,17 @@
         const lat = position.coords.latitude;
         const lng = position.coords.longitude;
         const accuracy = position.coords.accuracy;
+
+        if(store === 'Chatswood') {
+          config.storeLat = -33.7927;
+          config.storeLng = 151.19532;
+        }
+        else {
+          config.storeLat = -33.7693;
+          config.storeLng = 150.9528;
+        }
+       
+        
 
         const distance = calculateDistanceMeters(
           lat,
