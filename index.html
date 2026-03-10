@@ -1,281 +1,290 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Staff Attendance</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      background: #f4f6f8;
-      color: #222;
-    }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Staff Attendance</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: #f4f6f8;
+            color: #222;
+        }
 
-    .container {
-      max-width: 420px;
-      margin: 40px auto;
-      background: #fff;
-      padding: 24px;
-      border-radius: 12px;
-      box-shadow: 0 4px 18px rgba(0,0,0,0.08);
-    }
+        .container {
+            max-width: 420px;
+            margin: 40px auto;
+            background: #fff;
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+        }
 
-    h1 {
-      margin-top: 0;
-      font-size: 24px;
-      text-align: center;
-    }
+        h1 {
+            margin-top: 0;
+            font-size: 24px;
+            text-align: center;
+        }
 
-    .store {
-      text-align: center;
-      margin-bottom: 20px;
-      color: #555;
-    }
+        .store {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #555;
+        }
 
-    label {
-      display: block;
-      margin: 12px 0 6px;
-      font-weight: 600;
-    }
+        label {
+            display: block;
+            margin: 12px 0 6px;
+            font-weight: 600;
+        }
 
-    input, select, button {
-      width: 100%;
-      padding: 12px;
-      box-sizing: border-box;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      font-size: 16px;
-    }
+        input, select, button {
+            width: 100%;
+            padding: 12px;
+            box-sizing: border-box;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+        }
 
-    button {
-      margin-top: 18px;
-      background: #111827;
-      color: white;
-      border: none;
-      cursor: pointer;
-    }
+        button {
+            margin-top: 18px;
+            background: #111827;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
 
-    button:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-    }
+            button:disabled {
+                opacity: 0.6;
+                cursor: not-allowed;
+            }
 
-    .status {
-      margin-top: 16px;
-      padding: 12px;
-      border-radius: 8px;
-      display: none;
-      font-size: 14px;
-      line-height: 1.4;
-    }
+        .status {
+            margin-top: 16px;
+            padding: 12px;
+            border-radius: 8px;
+            display: none;
+            font-size: 14px;
+            line-height: 1.4;
+        }
 
-    .success {
-      background: #e8f7ee;
-      color: #146c2e;
-      display: block;
-    }
+        .success {
+            background: #e8f7ee;
+            color: #146c2e;
+            display: block;
+        }
 
-    .error {
-      background: #fdecec;
-      color: #a12622;
-      display: block;
-    }
+        .error {
+            background: #fdecec;
+            color: #a12622;
+            display: block;
+        }
 
-    .info {
-      background: #eef4ff;
-      color: #1d4ed8;
-      display: block;
-    }
+        .info {
+            background: #eef4ff;
+            color: #1d4ed8;
+            display: block;
+        }
 
-    .small {
-      font-size: 13px;
-      color: #666;
-      margin-top: 12px;
-    }
-  </style>
+        .small {
+            font-size: 13px;
+            color: #666;
+            margin-top: 12px;
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Staff Sign In</h1>
-    <div class="store" id="storeLabel">Fully Promoted - Blacktown/Chatswood</div>
+    <div class="container">
+        <h1>Staff Sign In</h1>
+        <div class="store" id="storeLabel">Blacktown/Chatswood</div>
 
-    <label for="name">Staff Name</label>
-    <input type="text" id="name" placeholder="Enter your name" />
+        <label for="name">Staff Name</label>
+        <input type="text" id="name" placeholder="Enter your name" />
 
-    <label for="action">Action</label>
-    <select id="action">
-      <option value="Sign In">Sign In</option>
-      <option value="Sign Out">Sign Out</option>
-    </select>
+        <label for="action">Action</label>
+        <select id="action">
+            <option value="Sign In">Sign In</option>
+            <option value="Sign Out">Sign Out</option>
+        </select>
 
-    <label for="store">Store</label>
-    <select id="store">
-      <option value="Blacktown">Blacktown</option>
-      <option value="Chatswood">Chatswood</option>
-    </select>
+        <label for="store">Store</label>
+        <select id="store">
+            <option value="Blacktown">Blacktown</option>
+            <option value="Chatswood">Chatswood</option>
+        </select>
 
-    <button id="submitBtn">Submit</button>
+        <button id="submitBtn">Submit</button>
 
-    <div id="statusBox" class="status"></div>
+        <div id="statusBox" class="status"></div>
 
-    <div class="small">
-      Location access must be enabled. Submission works only when near the store.
+        <div class="small">
+            Location access must be enabled. Submission works only when near the store.
+        </div>
     </div>
-  </div>
 
-  <script>
-    var config = {
-      apiUrl: "https://script.google.com/macros/s/AKfycbzfuJFKFc5axMP020tU-wSFxtvn9OTQdSQjmqyWigvUILSk01yRKpZ6sYjcdFBMFsSl/exec",
-      storeName: "Fully Promoted - Blacktown/Chatswood",
-      storeLat: -33.7693,
-      storeLng: 150.9528,
-      allowedRadiusMeters: 100
-    };
+    <script>
 
-    document.getElementById("storeLabel").textContent = config.storeName;
-    document.getElementById("submitBtn").addEventListener("click", submitAttendance);
-
-    function showStatus(type, message) {
-      const box = document.getElementById("statusBox");
-      box.className = "status " + type;
-      box.textContent = message;
-    }
-
-    function toRadians(deg) {
-      return deg * Math.PI / 180;
-    }
-
-    function calculateDistanceMeters(lat1, lng1, lat2, lng2) {
-      const R = 6371000;
-      const dLat = toRadians(lat2 - lat1);
-      const dLng = toRadians(lng2 - lng1);
-
-      const a =
-        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-        Math.cos(toRadians(lat1)) *
-        Math.cos(toRadians(lat2)) *
-        Math.sin(dLng / 2) * Math.sin(dLng / 2);
-
-      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-      return R * c;
-    }
-
-    function getCurrentLocation() {
-      return new Promise((resolve, reject) => {
-        if (!navigator.geolocation) {
-          reject(new Error("Geolocation is not supported on this device."));
-          return;
-        }
-
-        navigator.geolocation.getCurrentPosition(
-          position => resolve(position),
-          error => {
-            let msg = "Unable to get location.";
-            switch (error.code) {
-              case error.PERMISSION_DENIED:
-                msg = "Location permission denied.";
-                break;
-              case error.POSITION_UNAVAILABLE:
-                msg = "Location information is unavailable.";
-                break;
-              case error.TIMEOUT:
-                msg = "Location request timed out.";
-                break;
-            }
-            reject(new Error(msg));
-          },
-          {
-            enableHighAccuracy: true,
-            timeout: 15000,
-            maximumAge: 0
-          }
-        );
-      });
-    }
-
-    async function submitAttendance() {
-      const btn = document.getElementById("submitBtn");
-      const name = document.getElementById("name").value.trim();
-      const action = document.getElementById("action").value;
-      const store = document.getElementById("store").value;
-
-      if (!name) {
-        showStatus("error", "Please enter staff name.");
-        return;
-      }
-
-      btn.disabled = true;
-      showStatus("info", "Getting your location...");
-
-      try {
-        const position = await getCurrentLocation();
-        const lat = position.coords.latitude;
-        const lng = position.coords.longitude;
-        const accuracy = position.coords.accuracy;
-
-        if(store === 'Chatswood') {
-          config.storeLat = -33.7927;
-          config.storeLng = 151.19532;
-        }
-        else {
-          config.storeLat = -33.7693;
-          config.storeLng = 150.9528;
-        }
-       
-        
-
-        const distance = calculateDistanceMeters(
-          lat,
-          lng,
-          config.storeLat,
-          config.storeLng
-        );
-
-        if (distance > config.allowedRadiusMeters) {
-          showStatus(
-            "error",
-            `You are too far from the store. Distance detected: ${Math.round(distance)}m. Allowed: ${config.allowedRadiusMeters}m.`
-          );
-          btn.disabled = false;
-          return;
-        }
-
-        const payload = {
-          name: name,
-          action: action,
-          store: store,
-          lat: lat,
-          lng: lng,
-          accuracy: accuracy,
-          distance: Math.round(distance),
-          device: navigator.userAgent
+        const BT = {
+            lat: -33.7693,
+            lng: 150.9528
         };
 
-        showStatus("info", "Submitting attendance...");
+        const CW = {
+            //lat: -33.7927,
+            //lng: 151.19532
+            lat: -33.8653,
+            lng: 151.2022
+        };
 
-        const response = await fetch(config.apiUrl, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify(payload)
-        });
+        const config = {
+            apiUrl: "https://script.google.com/macros/s/AKfycbzfuJFKFc5axMP020tU-wSFxtvn9OTQdSQjmqyWigvUILSk01yRKpZ6sYjcdFBMFsSl/exec",
+            allowedRadiusMeters: 100
+        };
 
-        const result = await response.json();
+        document.getElementById("submitBtn").addEventListener("click", submitAttendance);
 
-        if (result.success) {
-          showStatus("success", result.message);
-          document.getElementById("name").value = "";
-        } else {
-          showStatus("error", result.message || "Submission failed.");
+        function showStatus(type, message) {
+            const box = document.getElementById("statusBox");
+            box.className = "status " + type;
+            box.textContent = message;
         }
-      } catch (err) {
-        showStatus("error", err.message || "Unexpected error occurred.");
-      } finally {
-        btn.disabled = false;
-      }
-    }
-  </script>
+
+        function toRadians(deg) {
+            return deg * Math.PI / 180;
+        }
+
+        function calculateDistanceMeters(lat1, lng1, lat2, lng2) {
+            const R = 6371000;
+            const dLat = toRadians(lat2 - lat1);
+            const dLng = toRadians(lng2 - lng1);
+
+            const a =
+                Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                Math.cos(toRadians(lat1)) *
+                Math.cos(toRadians(lat2)) *
+                Math.sin(dLng / 2) * Math.sin(dLng / 2);
+
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+            return R * c;
+        }
+
+        function getCurrentLocation() {
+            return new Promise((resolve, reject) => {
+                if (!navigator.geolocation) {
+                    reject(new Error("Geolocation is not supported on this device."));
+                    return;
+                }
+
+                navigator.geolocation.getCurrentPosition(
+                    position => resolve(position),
+                    error => {
+                        let msg = "Unable to get location.";
+                        switch (error.code) {
+                            case error.PERMISSION_DENIED:
+                                msg = "Location permission denied.";
+                                break;
+                            case error.POSITION_UNAVAILABLE:
+                                msg = "Location information is unavailable.";
+                                break;
+                            case error.TIMEOUT:
+                                msg = "Location request timed out.";
+                                break;
+                        }
+                        reject(new Error(msg));
+                    },
+                    {
+                        enableHighAccuracy: true,
+                        timeout: 15000,
+                        maximumAge: 0
+                    }
+                );
+            });
+        }
+
+        async function submitAttendance() {
+            const btn = document.getElementById("submitBtn");
+            const name = document.getElementById("name").value.trim();
+            const action = document.getElementById("action").value;
+            const store = document.getElementById("store").value;
+
+            if (!name) {
+                showStatus("error", "Please enter staff name.");
+                return;
+            }
+
+            btn.disabled = true;
+            showStatus("info", "Getting your location...");
+
+            try {
+                const position = await getCurrentLocation();
+                const lat = position.coords.latitude;
+                const lng = position.coords.longitude;
+                const accuracy = position.coords.accuracy;
+
+                var distance = 999999;
+
+                if (store === 'Chatswood') {
+                    distance = calculateDistanceMeters(
+                        lat,
+                        lng,
+                        CW.lat,
+                        CW.lng
+                    );
+                }
+                else {
+                    distance = calculateDistanceMeters(
+                        lat,
+                        lng,
+                        BT.lat,
+                        BT.lng
+                    );
+                }
+
+                if (distance > config.allowedRadiusMeters) {
+                    showStatus(
+                        "error",
+                        `You are too far from the store. Distance detected: ${Math.round(distance)}m. Allowed: ${config.allowedRadiusMeters}m.`
+                    );
+                    btn.disabled = false;
+                    return;
+                }
+
+                const payload = {
+                    name: name,
+                    action: action,
+                    store: store,
+                    lat: lat,
+                    lng: lng,
+                    accuracy: accuracy,
+                    distance: Math.round(distance),
+                    device: navigator.userAgent
+                };
+
+                showStatus("info", "Submitting attendance...");
+
+                const response = await fetch(config.apiUrl, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    showStatus("success", result.message);
+                    document.getElementById("name").value = "";
+                } else {
+                    showStatus("error", `Submission failed. Error ${result.message}`);
+                }
+            } catch (err) {
+                showStatus("error", `Unexpected error occurred.. Error ${err.message}`);
+            } finally {
+                btn.disabled = false;
+            }
+        }</script>
 </body>
 </html>
