@@ -171,36 +171,40 @@
         }
 
         function getCurrentLocation() {
-            return new Promise((resolve, reject) => {
-                if (!navigator.geolocation) {
-                    reject(new Error("Geolocation is not supported on this device."));
-                    return;
-                }
-
-                navigator.geolocation.getCurrentPosition(
-                    position => resolve(position),
-                    error => {
-                        let msg = "Unable to get location.";
-                        switch (error.code) {
-                            case error.PERMISSION_DENIED:
-                                msg = "Location permission denied.";
-                                break;
-                            case error.POSITION_UNAVAILABLE:
-                                msg = "Location information is unavailable.";
-                                break;
-                            case error.TIMEOUT:
-                                msg = "Location request timed out.";
-                                break;
-                        }
-                        reject(new Error(msg));
-                    },
-                    {
-                        enableHighAccuracy: true,
-                        timeout: 15000,
-                        maximumAge: 0
+            try {
+                return new Promise((resolve, reject) => {
+                    if (!navigator.geolocation) {
+                        reject(new Error("Geolocation is not supported on this device."));
+                        return;
                     }
-                );
-            });
+
+                    navigator.geolocation.getCurrentPosition(
+                        position => resolve(position),
+                        error => {
+                            let msg = "Unable to get location.";
+                            switch (error.code) {
+                                case error.PERMISSION_DENIED:
+                                    msg = "Location permission denied.";
+                                    break;
+                                case error.POSITION_UNAVAILABLE:
+                                    msg = "Location information is unavailable.";
+                                    break;
+                                case error.TIMEOUT:
+                                    msg = "Location request timed out.";
+                                    break;
+                            }
+                            reject(new Error(msg));
+                        },
+                        {
+                            enableHighAccuracy: true,
+                            timeout: 15000,
+                            maximumAge: 0
+                        }
+                    );
+                });
+            } catch (err) {
+                showStatus("error", `getCurrentLocation. Error ${err.message}`);
+            }
         }
 
         async function submitAttendance() {
@@ -279,10 +283,10 @@
                     showStatus("success", result.message);
                     document.getElementById("name").value = "";
                 } else {
-                    showStatus("error", `Submission failed. Error ${result.message}`);
+                    showStatus("error", `Submission failed. (submitAttendance) Error ${result.message}`);
                 }
             } catch (err) {
-                showStatus("error", `Unexpected error occurred.. Error ${err.message}`);
+                showStatus("error", `Unexpected error occurred. (submitAttendance) Error ${err.message}`);
             } finally {
                 btn.disabled = false;
             }
