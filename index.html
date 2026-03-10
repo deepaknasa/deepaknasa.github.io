@@ -139,7 +139,7 @@
         };
 
         const config = {
-            apiUrl: "https://script.google.com/macros/s/AKfycbzfuJFKFc5axMP020tU-wSFxtvn9OTQdSQjmqyWigvUILSk01yRKpZ6sYjcdFBMFsSl/exec",
+            apiUrl: "https://script.google.com/macros/s/AKfycbwB3UJHTVA-GG5lj1gkK82OD2C-omxYiHz9vbKmQe0Fmz7fD-vilN2Tw3lZI4tZ4JrX/exec",
             allowedRadiusMeters: 100
         };
 
@@ -255,7 +255,7 @@
                     return;
                 }
 
-                const payload = {
+                const payload1 = {
                     name: name,
                     action: action,
                     store: store,
@@ -266,18 +266,26 @@
                     device: navigator.userAgent
                 };
 
+                const payload = new URLSearchParams({
+                    name: name,
+                    action: action,
+                    store: store,
+                    lat: lat,
+                    lng: lng,
+                    accuracy: accuracy,
+                    distance: Math.round(distance),
+                    device: navigator.userAgent
+                });
+
                 showStatus("info", "Submitting attendance...");
 
                 const response = await fetch(config.apiUrl, {
                     method: "POST",
-                    mode: "no-cors",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify(payload)
+                    body: payload
                 });
 
                 const result = await response.json();
+                console.log(`result is ${text}`);
 
                 if (result.success) {
                     showStatus("success", result.message);
